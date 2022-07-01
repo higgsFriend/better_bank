@@ -1,0 +1,14 @@
+        {/* <Nav.Link href="/home/">Home</Nav.Link>
+        <Nav.Link href="/CreateAccount/">Create Account</Nav.Link>
+        <Nav.Link href="/deposit/">Deposit</Nav.Link>
+        <Nav.Link href="/withdraw/">Withdraw</Nav.Link>
+        <Nav.Link href="/balance/">Balance</Nav.Link>
+        <Nav.Link href="/alldata/">AllData</Nav.Link> */}
+
+Works but is blue and not nice to the eyes
+        {/* <NavLink to="/home">Home</NavLink>
+        <NavLink className="navbar-dark"to="/CreateAccount">Account</NavLink>
+        <NavLink to="/deposit">Deposit</NavLink>
+        <NavLink to="/withdraw/">Withdraw</NavLink>
+        <NavLink to="/balance/">Balance</NavLink>
+        <NavLink to="/alldata/">AllData</NavLink> */}
