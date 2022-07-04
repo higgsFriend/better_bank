@@ -5,7 +5,8 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 // export const UserContext = React.createContext(null);
 export const Context = React.createContext(null);
 export const minimumTransaction = 0.01;
-export const host = "54.161.66.90";
+// export const host = "54.161.66.90";
+export const host = "ec2-44-206-42-110.compute-1.amazonaws.com"
 export const url_base = `http://${host}:3001`;
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
