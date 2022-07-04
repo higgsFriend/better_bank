@@ -1,8 +1,7 @@
 import React from 'react';
 import Axios from 'axios';
-// import {Card} from './context';
-import { Context, url_base, Card, auth } from './context';
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { Context, url_base, Card, auth, provider } from './context';
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 function Login() {
   const [status, setStatus] = React.useState('');
@@ -35,7 +34,31 @@ function Login() {
         });
     }
     else if (method === 'google') {
-      console.log(`Login failed: Google auth not implemented yet.`);
+      console.log(`Attempting google signing....`);
+      
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential.accessToken;
+          // The signed-in user info.
+          const user = result.user;
+          console.log(`Goodtimes I think: ${JSON.stringify(user)}`);
+          ctx.updateUser({ email: user.email });
+          dbLookupUserDetails(user.email);
+          success = true;
+        }).catch((error) => {
+          // Handle Errors here.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(`No dice: ${errorMessage}`);
+          // The email of the user's account used.
+          const email = error.customData.email;
+          // The AuthCredential type that was used.
+          const credential = GoogleAuthProvider.credentialFromError(error);
+          // ...
+        });
+
     }
     else {
       console.log(`Login failed: Unknown method of login.`);
@@ -80,6 +103,20 @@ function Login() {
       setDisableSubmit(false);
     }, 3000);
   }
+  
+  function handleGoogleLogin() {
+    // Authenticate with Firebase.  If successful lookup details in the db
+    const isSuccess = authenticateUserWithFirebase(userEmail, userPassword, "google");
+
+    // Handle some primative animation
+    setTimeout(() => {
+      setStatus('');
+      setUserEmail('');
+      setUserPassword('');
+      setDisableSubmit(false);
+    }, 3000);
+
+  }
 
   // Do fancy stuff with the buttons while user is logging in
   useEffect(() => {
@@ -116,7 +153,8 @@ function Login() {
             <input type="input" placeholder="Email" value={userEmail} className="form-control" id="email" onChange={e => setUserEmail(e.currentTarget.value)} /><br />
             Password: <br />
             <input type="password" placeholder="Password" value={userPassword} className="form-control" id="password" onChange={e => setUserPassword(e.currentTarget.value)} /><br />
-            <button disabled={disableSubmit} type="submit" className="btn btn-light" onClick={handleLogin}>Login</button>
+            <button disabled={disableSubmit} type="submit" className="btn btn-light" onClick={handleLogin}>Login</button> <br /> OR <br />
+            <button  type="submit" className="btn btn-light" onClick={handleGoogleLogin}>Sign-in with Google</button>
           </>
         ) : (
           <>

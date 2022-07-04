@@ -6,6 +6,7 @@ import { Context } from "./context";
 function AllData() {
 
   const ctx = React.useContext(Context);
+  ctx.setUpdateRequired(true);
 
   ctx.userList.map((user) => {
     console.log(`${JSON.stringify(user)}`);

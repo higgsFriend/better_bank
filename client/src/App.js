@@ -38,7 +38,6 @@ function App() {
     }).then((response) => {
       setUpdateRequired(true);
       console.log(`Updated a old human ${target.email}..${response}`);
-      // createFirebaseUser(email, password,'email_and_pass')
     });
 
   };

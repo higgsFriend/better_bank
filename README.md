@@ -8,16 +8,16 @@
 - Create a docker network:
   docker network create bank-network
 - Start a mongodb instance on the ec2:
-  sudo docker run -d --net bank-network -p 27017:27017 --name mongo_db mongo:latest
+  sudo docker run -d --net bank-network --restart always -p 27017:27017 --name mongo_db mongo:latest
 - Create a docker file for the server application and build
   docker build . -t badbank-server
 - Create a docker file for the client application and build
   docker build . -t badbank-client
 
 - Run the server:
-  docker run --name node_server --net bank-network -p3001:3001 badbank-server
+  docker run --name node_server -h node_server --restart always --net bank-network -p3001:3001 badbank-server
 - Run the client:
-  docker run --name node_client --net bank-network -p3000:3000 badbank-client
+  docker run --name node_client --restart always --net bank-network -p3000:3000 badbank-client
 
 
 
@@ -44,7 +44,7 @@
 5. Database
 • Screenshot
 
-6. Deployed to Cloud
+6. Deployed to Cloud. DONE
 
 7. Other (bonus)
 • Roles for different users, such as a bank employee vs customer (authorization)
@@ -57,7 +57,7 @@
 8. Video Presentations
 Video 1: Front-End Architecture, Authentication, And App Diagram
 Video 2: Database And API
-Video 2: Database And API
+Video 3: Database And API
 
 
 ## Create the client as a react application
